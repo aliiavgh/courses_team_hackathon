@@ -10,7 +10,7 @@ class LikeMixin:
 
     @action(detail=True, methods=['POST'])
     def like(self, request, pk=None):
-        like_obj, _ = Like.objects.get_or_create(product_id=pk)
+        like_obj, _ = Like.objects.get_or_create(product_id=pk, owner=request.user)
         like_obj.is_like = not like_obj.is_like
         like_obj.save()
         status_ = 'liked'
@@ -23,7 +23,7 @@ class BookmarkMixin:
 
     @action(detail=True, methods=['POST'])
     def save_remove_bookmarks(self, request, pk=None):
-        bookmark_obj, _ = Bookmark.objects.get_or_create(course_id=pk)
+        bookmark_obj, _ = Bookmark.objects.get_or_create(course_id=pk, owner=request.user)
         bookmark_obj.is_favorite = not bookmark_obj.is_favorite
         bookmark_obj.save()
         status_ = 'saved in bookmarks'
@@ -43,7 +43,7 @@ class RatingMixin:
     @action(detail=True, methods=['POST'])
     def rating(self, request, pk=None):
         RatingSerializer(data=request.data).is_valid(raise_exception=True)
-        rating_obj, _ = Rating.objects.get_or_create(product_id=pk)
+        rating_obj, _ = Rating.objects.get_or_create(product_id=pk, owner=request.user)
         rating_obj.rating = request.data['rating']
         rating_obj.save()
         return Response(request.data, status=status.HTTP_201_CREATED)
