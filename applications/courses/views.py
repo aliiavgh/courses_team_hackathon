@@ -6,15 +6,19 @@ from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
 from applications.courses.models import Course, Subject
 from applications.courses.serializers import CourseSerializer, SubjectSerializer
+from applications.feedback.mixins import LikeMixin, BookmarkMixin, RatingMixin
 
 
-class CourseViewSet(ModelViewSet):
+class CourseViewSet(LikeMixin, BookmarkMixin, RatingMixin, ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ['subject', 'price', 'start_date']
     search_fields = ['title', 'description']
     ordering_fields = ['price']
+
+    def perform_create(self, serializer):
+        serializer.save(teacher=self.request.user)
 
 
 class SubjectViewSet(mixins.CreateModelMixin,

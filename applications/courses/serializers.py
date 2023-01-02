@@ -1,17 +1,19 @@
+from django.db.models import Avg
 from rest_framework import serializers
 
-from applications.courses.models import Image, Course, Subject
+from applications.courses.models import Course, Subject, CoursePoster
 
 
-class ImageSerializer(serializers.ModelSerializer):
+class CoursePosterSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Image
+        model = CoursePoster
         fields = '__all__'
 
 
 class CourseSerializer(serializers.ModelSerializer):
-    images = ImageSerializer(read_only=True, many=True)
+    teacher = serializers.EmailField(required=False)
+    posters = CoursePosterSerializer(read_only=True, many=True)
 
     class Meta:
         model = Course
@@ -22,12 +24,18 @@ class CourseSerializer(serializers.ModelSerializer):
         files_data = request.FILES
         course = Course.objects.create(**validated_data)
 
-        list_images = [Image(course=course, image=image) for image in files_data.getlist('images')]
-        Image.objects.bulk_create(list_images)
+        list_images = [CoursePoster(course=course, image=image) for image in files_data.getlist('posters')]
+        CoursePoster.objects.bulk_create(list_images)
+
+        return course
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
-        rep['images'] = [image['image'] for image in rep['images']]
+        rep['posters'] = [poster['image'] for poster in rep['posters']]
+        rep['likes'] = instance.likes.filter(is_like=True).count()
+        rep['rating'] = instance.ratings.all().aggregate(Avg('ratings'))['rating__avg']
+        #rep['comments'] = instance.comments.all().count()
+        rep['already enrolled'] = instance.purchases.filter(is_confirm=True).count()
         return rep
 
 
@@ -37,7 +45,8 @@ class SubjectSerializer(serializers.ModelSerializer):
         model = Subject
         fields = '__all__'
 
-    def validate_name(self, name):
+    @staticmethod
+    def validate_name(name):
         if Subject.objects.filter(name=name.lower()).exists():
             return serializers.ValidationError('This subject already exists!')
         return name
