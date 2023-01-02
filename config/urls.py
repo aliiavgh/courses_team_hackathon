@@ -24,11 +24,7 @@ urlpatterns = [
     path('api/v1/account/', include('applications.account.urls')),
     path('api/v1/courses/', include('applications.courses.urls')),
     path('api/v1/comments/', include('applications.feedback.urls')),
-<<<<<<< HEAD
-
-=======
     path('api/v1/purchases/', include('applications.purchases.urls'))
->>>>>>> demo
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

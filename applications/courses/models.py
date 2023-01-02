@@ -24,11 +24,7 @@ class Course(models.Model):
     )
     title = models.CharField(max_length=180)
     description = models.TextField()
-<<<<<<< HEAD
-    teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name='courses', default='default value')
-=======
     teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name='courses')
->>>>>>> demo
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='courses')
     status = models.CharField(choices=COURSE_STATUS, max_length=50, null=True)
     address = models.TextField(blank=True, null=True)
@@ -37,11 +33,7 @@ class Course(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     discount = models.PositiveIntegerField(validators=[MinValueValidator(5), MaxValueValidator(99)],
                                            blank=True, null=True)
-<<<<<<< HEAD
-    final_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
-=======
     final_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
->>>>>>> demo
     requirements = models.TextField(blank=True, null=True)
     available_places = models.PositiveIntegerField()
     start_date = models.DateField(blank=True, null=True)
@@ -50,11 +42,7 @@ class Course(models.Model):
 
     def save(self, *args, **kwargs):
         import datetime
-<<<<<<< HEAD
-        self.is_available = False if (datetime.date.today() >= self.end_date or self.places == 0) else True
-=======
         self.is_available = False if (datetime.date.today() > self.end_date or self.available_places == 0) else True
->>>>>>> demo
         super().save(*args, **kwargs)
 
     def __str__(self):

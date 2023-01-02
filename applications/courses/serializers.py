@@ -12,10 +12,7 @@ class CoursePosterSerializer(serializers.ModelSerializer):
 
 
 class CourseSerializer(serializers.ModelSerializer):
-<<<<<<< HEAD
-=======
     teacher = serializers.EmailField(required=False)
->>>>>>> demo
     posters = CoursePosterSerializer(read_only=True, many=True)
 
     class Meta:
@@ -26,30 +23,18 @@ class CourseSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         files_data = request.FILES
         course = Course.objects.create(**validated_data)
-
-<<<<<<< HEAD
         list_images = [CoursePoster(course=course, image=image) for image in files_data.getlist('images')]
         CoursePoster.objects.bulk_create(list_images)
-=======
         list_images = [CoursePoster(course=course, image=image) for image in files_data.getlist('posters')]
         CoursePoster.objects.bulk_create(list_images)
-
->>>>>>> demo
         return course
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
-<<<<<<< HEAD
-        rep['images'] = [image['image'] for image in rep['images']]
-        rep['likes'] = instance.likes.filter(is_like=True).count()
-        rep['rating'] = instance.ratings.all().aggregate(Avg('rating'))['rating__avg']
-        rep['comments'] = instance.comments.all().count()
-=======
         rep['posters'] = [poster['image'] for poster in rep['posters']]
         rep['likes'] = instance.likes.filter(is_like=True).count()
-        rep['rating'] = instance.ratings.all().aggregate(Avg('ratings'))['rating__avg']
+        rep['rating'] = instance.ratings.all().aggregate(Avg('rating'))['rating__avg']
         #rep['comments'] = instance.comments.all().count()
->>>>>>> demo
         rep['already enrolled'] = instance.purchases.filter(is_confirm=True).count()
         return rep
 

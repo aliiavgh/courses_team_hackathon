@@ -32,10 +32,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='purchase',
             name='student',
-<<<<<<< HEAD
-            field=models.ForeignKey(default='default value', on_delete=django.db.models.deletion.CASCADE, related_name='purchases', to=settings.AUTH_USER_MODEL),
-=======
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='purchases', to=settings.AUTH_USER_MODEL),
->>>>>>> demo
         ),
     ]
