@@ -17,6 +17,9 @@ class CourseViewSet(LikeMixin, BookmarkMixin, RatingMixin, ModelViewSet):
     search_fields = ['title', 'description']
     ordering_fields = ['price']
 
+    def perform_create(self, serializer):
+        serializer.save(teacher=self.request.user)
+
 
 class SubjectViewSet(mixins.CreateModelMixin,
                    mixins.RetrieveModelMixin,

@@ -11,6 +11,7 @@ class CoursePosterAdmin(admin.TabularInline):
 
 class CourseAdmin(admin.ModelAdmin):
     inlines = [CoursePosterAdmin]
+<<<<<<< HEAD
     list_display = ['id', 'title', 'likes']
 
     @staticmethod
@@ -21,3 +22,15 @@ class CourseAdmin(admin.ModelAdmin):
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Subject)
 admin.site.register(CoursePoster)
+=======
+    list_display = ['id', 'title']
+
+    """@staticmethod
+    def likes_counter(obj):
+        return obj.likes.filter(is_like=True).count()"""
+
+
+admin.site.register(Subject)
+admin.site.register(CoursePoster)
+admin.site.register(Course, CourseAdmin)
+>>>>>>> demo

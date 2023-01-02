@@ -11,7 +11,12 @@ class PurchaseSerializer(serializers.ModelSerializer):
         model = Purchase
         exclude = ('confirmation_code',)
 
+<<<<<<< HEAD
     def create(self, validated_data):
+=======
+    @staticmethod
+    def create(validated_data):
+>>>>>>> demo
         course = validated_data['course']
         if course.status is False:
             raise serializers.ValidationError('Unfortunately, this course is no longer available.')
