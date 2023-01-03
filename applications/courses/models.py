@@ -31,7 +31,7 @@ class Course(models.Model):
     language = models.CharField(max_length=50, default='russian')
     url = models.URLField(max_length=180, blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    discount = models.PositiveIntegerField(validators=[MinValueValidator(5), MaxValueValidator(99)],
+    discount = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(99)],
                                            blank=True, null=True)
     final_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     requirements = models.TextField(blank=True, null=True)
@@ -43,6 +43,7 @@ class Course(models.Model):
     def save(self, *args, **kwargs):
         import datetime
         self.is_available = False if (datetime.date.today() > self.end_date or self.available_places == 0) else True
+        self.final_price = float(self.price) * (1 - (self.discount/100))
         super().save(*args, **kwargs)
 
     def __str__(self):

@@ -1,5 +1,7 @@
 import datetime
 
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from rest_framework import status
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -10,7 +12,7 @@ from applications.purchases.models import Purchase
 from applications.purchases.permissions import IsPurchaseOwner
 from applications.purchases.serializers import PurchaseSerializer
 
-
+@method_decorator(cache_page(60*60), name='dispatch')
 class PurchaseViewSet(ModelViewSet):
     queryset = Purchase.objects.all()
     serializer_class = PurchaseSerializer
