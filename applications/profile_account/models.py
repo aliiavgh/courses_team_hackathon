@@ -22,6 +22,7 @@ class Profile(AbstractBaseUser):
     language = models.CharField(max_length=100)
     level = models.CharField(max_length=50)
     is_staff = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True)
 
     objects = UserManager()
 

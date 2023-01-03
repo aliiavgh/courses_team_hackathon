@@ -17,4 +17,3 @@ class ProfileApiView(APIView):
         serializer.save()
 
         return Response('Вы успешно зарегистрировались.', status=status.HTTP_201_CREATED)
-

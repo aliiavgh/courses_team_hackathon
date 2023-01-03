@@ -10,4 +10,3 @@ def send_confirmation_email(email, code):
         [email],
         fail_silently=True
     )
-

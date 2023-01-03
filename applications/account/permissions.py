@@ -3,25 +3,13 @@ from rest_framework.permissions import BasePermission
 
 class StudentOnly(BasePermission):
     def has_permission(self, request, view):
-        return request.user.is_authenticated(request.user, "students")
+        return request.user.is_authenticated(request.user)
 
 
 class TeacherManagerOnly(BasePermission):
+
     def has_permission(self, request, view):
-        return (request.user.is_authenticated
-                and hasattr(request.user, 'teacher')
-                and request.user.member.is_active
-                and request.user.member.is_staff
-                )
-
-    def has_add_permission(self, request):
-        return request.user.is_superuser or request.user.groups.filter(name='Teacher').exists()
-
-    def has_change_permission(self, request, obj=None):
-        return request.user.is_superuser or request.user.groups.filter(name='Teacher').exists()
-
-    def has_delete_permission(self, request, obj=None):
-        return request.user.is_superuser or request.user.groups.filter(name='Teacher').exists()
+        return bool(request.user and (request.user.is_staff and request.user.is_active))
 
 
 # class StudentAndTeacherManagerOnly(BasePermission):

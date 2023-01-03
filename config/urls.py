@@ -22,5 +22,4 @@ urlpatterns = [
     path('api/v1/profile/', include('applications.profile_account.urls')),
     path('api/v1/forgot/', include('applications.forgot.urls')),
     path('api/v1/change/', include('applications.change.urls')),
-
 ]
