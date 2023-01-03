@@ -1,16 +1,14 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from .send_mail import send_confirmation_email
-
-User = get_user_model()
+from .models import Profile
 
 
-class RegisterSerializer(serializers.ModelSerializer):
+class RegisterProfileSerializer(serializers.ModelSerializer):
     password = serializers.CharField(max_length=100)
     password2 = serializers.CharField(min_length=6, write_only=True, required=True)
 
     class Meta:
-        model = User
+        model = Profile
         fields = ['email', 'password', 'password2']
 
     def validate(self, attrs):
@@ -19,10 +17,3 @@ class RegisterSerializer(serializers.ModelSerializer):
         if p1 != p2:
             raise serializers.ValidationError('Паспорт не верный')
         return attrs
-
-    def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)
-        send_confirmation_email(email=user.email, code=user.activation_code)
-
-        return user
-

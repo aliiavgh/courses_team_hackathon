@@ -42,7 +42,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
 
-    'applications.account'
+    'applications.account',
+    'applications.forgot',
+    'applications.change',
+    'applications.profile_account',
 ]
 
 MIDDLEWARE = [
@@ -139,3 +142,5 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=600),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
+
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
