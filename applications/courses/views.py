@@ -11,12 +11,12 @@ from applications.courses.serializers import CourseSerializer, SubjectSerializer
 from applications.feedback.mixins import LikeMixin, BookmarkMixin, RatingMixin
 
 
-@method_decorator(cache_page(60*60), name='dispatch')
+@method_decorator(cache_page(60), name='dispatch')
 class CourseViewSet(LikeMixin, BookmarkMixin, RatingMixin, ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['subject', 'price', 'start_date']
+    filterset_fields = ['subject', 'teacher', 'start_date']
     search_fields = ['title', 'description']
     ordering_fields = ['price']
 

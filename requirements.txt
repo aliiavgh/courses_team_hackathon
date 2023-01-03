@@ -8,3 +8,4 @@ drf-yasg
 pillow
 django-filter
 celery[redis]
+loguru

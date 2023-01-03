@@ -27,7 +27,7 @@ class Purchase(models.Model):
         return f'{self.student} - {self.status} - {self.course}'
 
     def save(self, *args, **kwargs):
-        import datetime
-        if datetime.date.today() >= self.course.end_date and self.is_confirm == True:
+        import datetime as dt
+        if dt.date.today() >= self.course.end_date and self.is_confirm == True:
             self.status = 'completed'
-        return  super().save(*args, **kwargs)
+        return super().save(*args, **kwargs)
