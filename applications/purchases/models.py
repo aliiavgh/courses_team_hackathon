@@ -30,4 +30,4 @@ class Purchase(models.Model):
         import datetime
         if datetime.date.today() >= self.course.end_date and self.is_confirm == True:
             self.status = 'completed'
-
+        return  super().save(*args, **kwargs)

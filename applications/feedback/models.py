@@ -12,11 +12,17 @@ class Like(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='likes')
     is_like = models.BooleanField(default=False)
 
+    def __str__(self):
+        return f'{self.owner} --> {self.course}'
+
 
 class Comment(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='comments')
     content = models.TextField()
+
+    def __str__(self):
+        return f'{self.owner} --> {self.course}'
 
 
 class Bookmark(models.Model):
@@ -24,9 +30,14 @@ class Bookmark(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='bookmarks')
     is_in_bookmarks = models.BooleanField(default=False)
 
+    def __str__(self):
+        return f'{self.owner} --> {self.course}'
+
 
 class Rating(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='ratings')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='ratings')
-    rating = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    rating = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)], blank=True, null=True)
 
+    def __str__(self):
+        return f'{self.owner} --> {self.course}'

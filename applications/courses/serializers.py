@@ -34,7 +34,7 @@ class CourseSerializer(serializers.ModelSerializer):
         rep['posters'] = [poster['image'] for poster in rep['posters']]
         rep['likes'] = instance.likes.filter(is_like=True).count()
         rep['rating'] = instance.ratings.all().aggregate(Avg('rating'))['rating__avg']
-        #rep['comments'] = instance.comments.all().count()
+        rep['comments'] = instance.comments.all().count()
         rep['already enrolled'] = instance.purchases.filter(is_confirm=True).count()
         return rep
 

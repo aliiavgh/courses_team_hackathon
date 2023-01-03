@@ -11,14 +11,21 @@ class PurchaseSerializer(serializers.ModelSerializer):
         model = Purchase
         exclude = ('confirmation_code',)
 
+    def validate(self, attrs):
+        course_access = attrs['course'].is_available
+        if course_access is False:
+            raise serializers.ValidationError('Unfortunately, this course is no longer available.')
+        return attrs
+
     @staticmethod
     def create(validated_data):
         course = validated_data['course']
         if course.status is False:
             raise serializers.ValidationError('Unfortunately, this course is no longer available.')
-        course.places -= 1
-        course.save(update_fields=['places'])
+        course.available_places -= 1
+        course.save(update_fields=['available_places'])
 
         purchase = Purchase.objects.create(**validated_data)
-        send_purchase_confirmation_email.delay(purchase.student.email, purchase.confirmation_code)
+        send_purchase_confirmation_email.delay(email=purchase.student.email, title=purchase.course.title,
+                                               price=purchase.course.price, confirmation_code=purchase.confirmation_code)
         return purchase

@@ -11,7 +11,7 @@ class LikeSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    owner = serializers.ReadOnlyField(required=False)
+    owner = serializers.EmailField(required=False)
 
     class Meta:
         model = Comment
@@ -19,10 +19,18 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class BookmarkSerializer(serializers.ModelSerializer):
+    course = serializers.ReadOnlyField(source='course.title')
 
     class Meta:
         model = Bookmark
-        fields = '__all__'
+        fields = ('course',)
+
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        rep['course description'] = instance.course.description
+        rep['status'] = instance.course.status
+        rep['price'] = instance.course.price
+        return rep
 
 
 class RatingSerializer(serializers.ModelSerializer):
