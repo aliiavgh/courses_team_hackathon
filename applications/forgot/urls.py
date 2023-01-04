@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import ForgotPasswordApiView, ForgotPasswordCompleteApiView
+from applications.forgot.views import ForgotPasswordApiView, ForgotPasswordCompleteApiView
 
 urlpatterns = [
     path('forgot_password/', ForgotPasswordApiView.as_view()),

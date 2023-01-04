@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'applications.account',
     'applications.forgot',
     'applications.change',
+    'applications.spam',
     'applications.profile_account',
 ]
 
@@ -143,4 +144,7 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 
+
+BROKER_URL = 'redis://127.0.0.1:6379/0'
+BROKER_TRANSPORT = 'redis'
 
