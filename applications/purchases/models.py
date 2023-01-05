@@ -13,7 +13,6 @@ class Purchase(models.Model):
     PURCHASE_STATUS = (
         ('not_confirmed', 'Not confirmed'),
         ('waiting', 'Waiting'),
-        ('in_process', 'In process'),
         ('completed', 'Completed')
     )
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='purchases')
@@ -25,9 +24,3 @@ class Purchase(models.Model):
 
     def __str__(self):
         return f'{self.student} - {self.status} - {self.course}'
-
-    def save(self, *args, **kwargs):
-        import datetime as dt
-        if dt.date.today() >= self.course.end_date and self.is_confirm == True:
-            self.status = 'completed'
-        return super().save(*args, **kwargs)

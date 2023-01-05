@@ -37,7 +37,7 @@ class PurchaseConfirmAPIView(APIView):
             purchase.is_confirm = True
             if dt.date.today() < purchase.course.start_date:
                 purchase.status = 'waiting'
-            purchase.status = 'in_process'
+            purchase.status = 'completed'
             purchase.save(update_fields=['is_confirm', 'status'])
 
             return Response({'message': 'You have been added to the course!'}, status=status.HTTP_200_OK)

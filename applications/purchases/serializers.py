@@ -20,8 +20,6 @@ class PurchaseSerializer(serializers.ModelSerializer):
     @staticmethod
     def create(validated_data):
         course = validated_data['course']
-        if course.status is False:
-            raise serializers.ValidationError('Unfortunately, this course is no longer available.')
         course.available_places -= 1
         course.save(update_fields=['available_places'])
 

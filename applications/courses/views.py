@@ -7,12 +7,13 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
 from applications.courses.models import Course, Subject
+from applications.courses.recommendations_mixin import RecommendationMixin
 from applications.courses.serializers import CourseSerializer, SubjectSerializer
 from applications.feedback.mixins import LikeMixin, BookmarkMixin, RatingMixin
 
 
 @method_decorator(cache_page(60), name='dispatch')
-class CourseViewSet(LikeMixin, BookmarkMixin, RatingMixin, ModelViewSet):
+class CourseViewSet(LikeMixin, BookmarkMixin, RatingMixin, RecommendationMixin, ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
