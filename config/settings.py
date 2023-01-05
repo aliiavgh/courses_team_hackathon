@@ -19,7 +19,6 @@ from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -32,7 +31,6 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=True)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(',')
-
 
 # Application definition
 
@@ -53,7 +51,7 @@ INSTALLED_APPS = [
     # my apps
     'applications.courses',
     'applications.purchases',
-    'applications.feedback'
+    # 'applications.feedback'
     'applications.account',
     'applications.forgot',
     'applications.change',
@@ -90,22 +88,12 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
-
-<< << << < HEAD
-
-== == == =
->> >> >> > bc8f448857dcb19aae9d163b635e2c5826c3873e
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
     'default': dj_database_url.config(default=config('DATABASE_URL'))
 }
-
-<< << << < HEAD
-
-== == == =
->> >> >> > bc8f448857dcb19aae9d163b635e2c5826c3873e
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -124,10 +112,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-<< << << < HEAD
-
-== == == =
->> >> >> > bc8f448857dcb19aae9d163b635e2c5826c3873e
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -153,8 +137,8 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES':
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 10
 }
@@ -169,12 +153,6 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_USE_TLS = True
 
 AUTH_USER_MODEL = 'account.User'
-
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
-}
 
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
@@ -193,4 +171,3 @@ SIMPLE_JWT = {
 
 BROKER_URL = 'redis://127.0.0.1:6379/0'
 BROKER_TRANSPORT = 'redis'
->> >> >> > bc8f448857dcb19aae9d163b635e2c5826c3873e

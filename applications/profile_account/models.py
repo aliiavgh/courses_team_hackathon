@@ -1,17 +1,11 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.db import models
+from applications.account.models import UserManager
 
 User = get_user_model()
 
-
-class UserManager(BaseUserManager):
-    use_in_migrations = True
-
-    def create_user(self, email=None, password=None, **extra_fields):
-        extra_fields.setdefault("is_staff", False)
-        extra_fields.setdefault("is_superuser", False)
-        return self._create_user(email, password, **extra_fields)
+#
 
 
 class Profile(AbstractBaseUser):

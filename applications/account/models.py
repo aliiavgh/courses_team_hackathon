@@ -2,8 +2,6 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 
 class UserManager(BaseUserManager):
@@ -40,6 +38,11 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     is_active = models.BooleanField(default=False)
     activation_code = models.CharField(max_length=40, blank=True)
+    first_name = models.CharField(max_length=20, blank=True, null=True)
+    educations = models.TextField(blank=True, null=True)
+    language = models.CharField(max_length=100, blank=True, null=True)
+    level = models.CharField(max_length=50, blank=True, null=True)
+    # is_staff = models.BooleanField(default=True, blank=True, null=True)
 
     objects = UserManager()
 
