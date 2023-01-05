@@ -4,6 +4,6 @@ from applications.courses.views import CourseViewSet, SubjectViewSet
 
 router = DefaultRouter()
 router.register('subjects', SubjectViewSet)
-router.register('', CourseViewSet)
+router.register('', CourseViewSet, basename='courses')
 
 urlpatterns = router.urls

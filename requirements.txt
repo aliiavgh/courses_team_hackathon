@@ -9,3 +9,5 @@ pillow
 django-filter
 celery[redis]
 loguru
+coverage
+model_bakery

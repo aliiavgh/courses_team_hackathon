@@ -30,3 +30,5 @@ class SubjectViewSet(mixins.CreateModelMixin,
                    GenericViewSet):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
+
+

@@ -4,7 +4,7 @@ from rest_framework.routers import DefaultRouter
 from applications.purchases.views import PurchaseViewSet, PurchaseConfirmAPIView
 
 router = DefaultRouter()
-router.register('', PurchaseViewSet)
+router.register('', PurchaseViewSet, basename='purchases')
 
 urlpatterns = [
     path('confirm/<uuid:confirmation_code>/', PurchaseConfirmAPIView.as_view()),
