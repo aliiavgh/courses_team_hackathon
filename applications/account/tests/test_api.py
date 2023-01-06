@@ -1,9 +1,5 @@
 import json
-import token
-from datetime import date
 
-from django.contrib.auth import get_user_model
-from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
@@ -22,6 +18,16 @@ class RegisterLoginUserAPITestCase(APITestCase):
         response = self.client.post('/api/v1/account/register/',
                                     {'email': 'user@gmail.com', 'password': 'clouds22', 'password2': 'clouds22'})
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_mismatched_passwords_user(self):
+        response = self.client.post('/api/v1/account/register/',
+                                    {'email': 'test@gmail.com', 'password': 'clouds12', 'password2': 'clouds22'})
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_existing_mail_user(self):
+        response = self.client.post('/api/v1/account/register/',
+                                    {'email': 'test@gmail.com', 'password': 'clouds12', 'password2': 'clouds22'})
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_login_user(self):
         response = self.client.post('/api/v1/account/login/',
