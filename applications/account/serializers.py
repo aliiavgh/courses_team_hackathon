@@ -1,13 +1,8 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
-
 from .send_mail import send_confirmation_email
 
 User = get_user_model()
-MODE = (
-    ('Teacher', 'Teacher'),
-    ('Student', 'Student'),
-)
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -16,7 +11,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['email', 'password', 'password2']
+        fields = ('email', 'password', 'password2')
 
     def validate(self, attrs):
         p1 = attrs.get('password')
@@ -31,12 +26,3 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         return user
 
-
-class ProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['education', 'language_and_level']
-
-
-# TODO: education check
-# TODO: languages

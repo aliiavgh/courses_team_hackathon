@@ -30,25 +30,26 @@ class CourseTestCase(TestCase):
         test_teacher.save()
         test_subject = Subject.objects.create(name='Subject_1')
         test_subject.save()
-        test_courses = baker.make('courses.Course', title='test_course', teacher=test_teacher, status='online',
-                                  subject=test_subject, available_places=randrange(1), discount=randrange(99),
-                                  start_date=date(2023, 1, start_day), end_date=date(2023, 1, end_day),
-                                  price=randrange(100, 50000), _quantity=5)
+        test_courses = baker.make('courses.Course', teacher=test_teacher, status='online',
+                                  subject=test_subject, available_places=10, discount=20,
+                                  start_date=date(2023, 1, 10), end_date=date(2023, 1, 30),
+                                  price=1000, _quantity=5)
+        assert test_courses
 
     def test_course_title_max_length(self):
-        course = Course.objects.get(id=1)
-        title_max_length = course._meta.get_field('title').max_length
+        courses = Course.objects.all()
+        title_max_length = courses[0]._meta.get_field('title').max_length
         self.assertEqual(title_max_length, 180)
 
     def test_course_language_max_length(self):
-        course = Course.objects.get(id=1)
-        language_max_length = course._meta.get_field('language').max_length
+        course = Course.objects.all()
+        language_max_length = course[0]._meta.get_field('language').max_length
         self.assertEqual(language_max_length, 50)
 
     def test_course_availability(self):
-        course = Course.objects.get(id=1)
-        self.assertTrue(course.is_available)
+        course = Course.objects.all()
+        self.assertTrue(course[0].is_available)
 
     def test_course_final_price(self):
-        course = Course.objects.get(id=1)
-        self.assertEqual(course.final_price, 800)
+        course = Course.objects.all()
+        self.assertEqual(course[0].final_price, 800)

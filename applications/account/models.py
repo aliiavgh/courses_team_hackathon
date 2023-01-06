@@ -2,8 +2,6 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 
 class UserManager(BaseUserManager):
@@ -38,7 +36,6 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     username = None
     email = models.EmailField(unique=True)
-    password = models.CharField(max_length=100)
     is_active = models.BooleanField(default=False)
     activation_code = models.CharField(max_length=40, blank=True)
 
@@ -54,22 +51,3 @@ class User(AbstractUser):
         import uuid
         code = str(uuid.uuid4())
         self.activation_code = code
-
-
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='teachers')
-    education = models.TextField()
-    language_and_level = models.CharField(max_length=500)
-
-    # @receiver(post_save, sender=User)
-    # def create_user_profile(sender, instance, created, **kwargs):
-    #     if created:
-    #         Profile.objects.create(user=instance)
-    #
-    # @receiver(post_save, sender=User)
-    # def save_user_profile(sender, instance, **kwargs):
-    #     instance.profile.save()
-    #
-    # def update_profile(request, user_id):
-    #     user = User.objects.get(pk=user_id)
-    #     user.save()

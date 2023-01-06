@@ -6,7 +6,11 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/courses_team_project.iml" filepath="$PROJECT_DIR$/.idea/courses_team_project.iml" />
 =======
       <module fileurl="file://$PROJECT_DIR$/.idea/team_hackathon .iml" filepath="$PROJECT_DIR$/.idea/team_hackathon .iml" />
+<<<<<<< HEAD
 >>>>>>> origin/account_user
+=======
+>>>>>>> bc8f448857dcb19aae9d163b635e2c5826c3873e
+>>>>>>> 3d1b40dc7a1aa03ae447febb68266f11154ee760
     </modules>
   </component>
 </project>
