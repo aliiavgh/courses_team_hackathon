@@ -27,7 +27,7 @@ class CourseSerializer(serializers.ModelSerializer):
         list_images = [CoursePoster(course=course, image=image) for image in files_data.getlist('posters')]
         CoursePoster.objects.bulk_create(list_images)
 
-        send_spam(course.title)
+        send_spam.delay(course_title=course.title)
         return course
 
     def to_representation(self, instance):

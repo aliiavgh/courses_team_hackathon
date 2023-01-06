@@ -89,9 +89,13 @@ class DeleteCourseAPITestCase(APITestCase):
         response_content = json.loads(response.content.decode('utf-8'))
         self.access_token = response_content['access']
 
-
     def test_delete_course(self):
         course = Course.objects.all()[0]
         response = self.client.delete(reverse('courses-detail', args=[course.id]),
                                     HTTP_AUTHORIZATION=f'Bearer {self.access_token}'.format(token))
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_unauthorized_user_deletes_course(self):
+        course = Course.objects.all()[0]
+        response = self.client.delete(reverse('courses-detail', args=[course.id]),)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)

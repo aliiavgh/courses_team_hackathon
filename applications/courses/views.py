@@ -7,6 +7,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
 from applications.courses.models import Course, Subject
+from applications.courses.permissions import IsCourseOwner
 from applications.courses.recommendations_mixin import RecommendationMixin
 from applications.courses.serializers import CourseSerializer, SubjectSerializer
 from applications.feedback.mixins import LikeMixin, BookmarkMixin, RatingMixin
@@ -16,6 +17,7 @@ from applications.feedback.mixins import LikeMixin, BookmarkMixin, RatingMixin
 class CourseViewSet(LikeMixin, BookmarkMixin, RatingMixin, RecommendationMixin, ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
+    permission_classes = [IsCourseOwner]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ['subject', 'teacher', 'start_date']
     search_fields = ['title', 'description']
