@@ -2,6 +2,9 @@
 <project version="4">
 <<<<<<< HEAD
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.8 (courses_team_project)" project-jdk-type="Python SDK" />
+=======
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.8 (team_hackathon)" project-jdk-type="Python SDK" />
+>>>>>>> bc8f448857dcb19aae9d163b635e2c5826c3873e
   <component name="PyCharmProfessionalAdvertiser">
     <option name="shown" value="true" />
   </component>

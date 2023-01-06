@@ -2,8 +2,6 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 
 class UserManager(BaseUserManager):
@@ -26,6 +24,7 @@ class UserManager(BaseUserManager):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
         extra_fields.setdefault("is_active", True)
+        extra_fields.setdefault("is_teacher", True)
 
         if extra_fields.get("is_staff") is not True:
             raise ValueError("Superuser must have is_staff=True.")
@@ -38,9 +37,13 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     username = None
     email = models.EmailField(unique=True)
-    password = models.CharField(max_length=100)
     is_active = models.BooleanField(default=False)
     activation_code = models.CharField(max_length=40, blank=True)
+    is_teacher = models.BooleanField(default=False)
+    first_name = models.CharField(max_length=20, blank=True, null=True)
+    educations = models.TextField(blank=True, null=True)
+    language = models.CharField(max_length=100, blank=True, null=True)
+    level = models.CharField(max_length=50, blank=True, null=True)
 
     objects = UserManager()
 
@@ -50,26 +53,12 @@ class User(AbstractUser):
     def __str__(self):
         return self.email
 
+    def save(self, *args, **kwargs):
+        self.is_staff = True if self.is_teacher is True else False
+        super().save(*args, **kwargs)
+
     def create_activation_code(self):
         import uuid
+
         code = str(uuid.uuid4())
         self.activation_code = code
-
-
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='teachers')
-    education = models.TextField()
-    language_and_level = models.CharField(max_length=500)
-
-    # @receiver(post_save, sender=User)
-    # def create_user_profile(sender, instance, created, **kwargs):
-    #     if created:
-    #         Profile.objects.create(user=instance)
-    #
-    # @receiver(post_save, sender=User)
-    # def save_user_profile(sender, instance, **kwargs):
-    #     instance.profile.save()
-    #
-    # def update_profile(request, user_id):
-    #     user = User.objects.get(pk=user_id)
-    #     user.save()

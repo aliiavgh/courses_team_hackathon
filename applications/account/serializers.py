@@ -4,19 +4,16 @@ from rest_framework import serializers
 from .send_mail import send_confirmation_email
 
 User = get_user_model()
-MODE = (
-    ('Teacher', 'Teacher'),
-    ('Student', 'Student'),
-)
 
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(max_length=100)
     password2 = serializers.CharField(min_length=6, write_only=True, required=True)
+    is_teacher = serializers.BooleanField(required=True)
 
     class Meta:
         model = User
-        fields = ['email', 'password', 'password2']
+        fields = ['email', 'password', 'password2', 'is_teacher']
 
     def validate(self, attrs):
         p1 = attrs.get('password')
@@ -30,13 +27,3 @@ class RegisterSerializer(serializers.ModelSerializer):
         send_confirmation_email(email=user.email, code=user.activation_code)
 
         return user
-
-
-class ProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['education', 'language_and_level']
-
-
-# TODO: education check
-# TODO: languages

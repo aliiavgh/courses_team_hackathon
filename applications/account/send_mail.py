@@ -6,7 +6,7 @@ def send_confirmation_email(email, code):
     send_mail(
         'Активация пользователя',
         activation_url,
-        'aliyakomanovaa@gmail.com',
+        'musabekova.amina13@gmail.com',
         [email],
         fail_silently=True
     )

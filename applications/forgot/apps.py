@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class FeedbackConfig(AppConfig):
+class ForgotConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'applications.feedback'
+    name = 'applications.forgot'

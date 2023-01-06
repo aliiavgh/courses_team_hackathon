@@ -4,7 +4,11 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
+<<<<<<< HEAD
     <orderEntry type="inheritedJdk" />
+=======
+    <orderEntry type="jdk" jdkName="Python 3.8 (team_hackathon)" jdkType="Python SDK" />
+>>>>>>> 3fadcee9b3fdb1e8af498ca4b836e322ffd26284
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
