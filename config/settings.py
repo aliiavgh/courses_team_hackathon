@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'applications.account',
     'applications.forgot',
     'applications.change',
-    'applications.spam',
     'applications.profile_account',
 ]
 

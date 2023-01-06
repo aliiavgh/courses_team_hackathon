@@ -2,6 +2,7 @@ from django.db.models import Avg
 from rest_framework import serializers
 
 from applications.courses.models import Course, Subject, CoursePoster
+from config.tasks import send_spam
 
 
 class CoursePosterSerializer(serializers.ModelSerializer):
@@ -23,10 +24,10 @@ class CourseSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         files_data = request.FILES
         course = Course.objects.create(**validated_data)
-        list_images = [CoursePoster(course=course, image=image) for image in files_data.getlist('images')]
-        CoursePoster.objects.bulk_create(list_images)
         list_images = [CoursePoster(course=course, image=image) for image in files_data.getlist('posters')]
         CoursePoster.objects.bulk_create(list_images)
+
+        send_spam(course.title)
         return course
 
     def to_representation(self, instance):

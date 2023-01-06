@@ -12,10 +12,10 @@ for i in user:
 
 
 @app.task
-def send_spam():
+def send_spam(course_title):
     send_mail(
         'Спам',
-        'Привет',
+        f'Привет, опубликован новый курс! {course_title}',
         'musabekova.amina13@gmail.com',
         email
     )

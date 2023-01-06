@@ -4,9 +4,8 @@ from datetime import date
 
 from django.contrib.auth import get_user_model
 from django.urls import reverse
-from requests.auth import HTTPBasicAuth
 from rest_framework import status
-from rest_framework.test import APITestCase, RequestsClient
+from rest_framework.test import APITestCase
 
 from model_bakery import baker
 
@@ -59,7 +58,7 @@ class PurchaseAPITestCAse(APITestCase):
         #self.assertEqual(response.data, serializer_data)
 
 
-class CreatePurchaseAPITestCase(APITestCase):
+class DeletePurchaseAPITestCase(APITestCase):
     def setUp(self):
         test_student = User.objects.create_superuser(email='student@gmail.com', password='neverland110')
         test_student.save()
@@ -71,19 +70,18 @@ class CreatePurchaseAPITestCase(APITestCase):
                                             subject=test_subject, status='online', available_places=20, discount=20,
                                             start_date=date(2023, 1, 10), end_date=date(2023, 1, 30), price=1000)
         test_course.save()
-        self.new_test_purchase = {
-            'course': test_course, 'student': test_student, status: 'confirmed'
-        }
-        assert self.new_test_purchase
+        self.test_new_purchase = {'course': test_course, 'status': 'not_confirmed', 'student': test_student}
+        assert self.test_new_purchase
 
         response = self.client.post('/api/v1/account/login/',
                                     {'email': 'student@gmail.com', 'password': 'neverland110'})
         response_content = json.loads(response.content.decode('utf-8'))
         self.access_token = response_content['access']
 
-    def test_create_new_course(self):
-        response = self.client.post('http://127.0.0.1:8000/api/v1/purchases/', self.new_test_purchase,
-                                   HTTP_AUTHORIZATION=f'Bearer {self.access_token}'.format(token))
+    def test_create_purchase(self):
+        purchase = Purchase.objects.all()[0]
+        response = self.client.create(reverse('purchases-list'), self.test_new_purchase,
+                                    HTTP_AUTHORIZATION=f'Bearer {self.access_token}'.format(token))
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
