@@ -12,7 +12,19 @@ for i in user:
 
 
 @app.task
-def send_spam(course_title):
+def send_spam():
+    """Спам рассылка для всех пользователей"""
+    send_mail(
+        'Спам',
+        f'Привет, хочешь записаться на курсы? Заходи на наш сайт: {http://127.0.0.1:8000/api/v1/purchases/}',
+        'musabekova.amina13@gmail.com',
+        email
+    )
+
+
+@app.task
+def send_notifications_about_new_course(course_title):
+    """Рассылка уведомлений о новых курсах для всех пользователей"""
     send_mail(
         'Спам',
         f'Привет, опубликован новый курс! {course_title}',

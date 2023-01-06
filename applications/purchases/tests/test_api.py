@@ -58,7 +58,7 @@ class PurchaseAPITestCAse(APITestCase):
         #self.assertEqual(response.data, serializer_data)
 
 
-class DeletePurchaseAPITestCase(APITestCase):
+class CreatePurchaseAPITestCase(APITestCase):
     def setUp(self):
         test_student = User.objects.create_superuser(email='student@gmail.com', password='neverland110')
         test_student.save()

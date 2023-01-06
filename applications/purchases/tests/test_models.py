@@ -1,4 +1,6 @@
+import json
 import re
+import token
 from datetime import date
 
 from django.contrib.auth import get_user_model
@@ -15,9 +17,8 @@ User = get_user_model()
 
 
 class PurchaseTestCase(TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        test_student = User.objects.create(email='student@gmail.com', password='neverland110')
+    def setUp(self):
+        test_student = User.objects.create_superuser(email='student@gmail.com', password='neverland110')
         test_student.save()
         test_teacher = User.objects.create_user(email='teacher@gmail.com', password='mrrobot990')
         test_teacher.save()
@@ -36,7 +37,7 @@ class PurchaseTestCase(TestCase):
                                                   is_confirm=False)
         test_purchase_1.save()
 
+
     def test_purchase_status(self):
         purchase_1 = Purchase.objects.get(id=1)
         self.assertEqual(purchase_1.status, 'not_confirmed')
-

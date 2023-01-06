@@ -2,7 +2,7 @@ from django.db.models import Avg
 from rest_framework import serializers
 
 from applications.courses.models import Course, Subject, CoursePoster
-from config.tasks import send_spam
+from config.tasks import send_notifications_about_new_course
 
 
 class CoursePosterSerializer(serializers.ModelSerializer):
@@ -27,7 +27,7 @@ class CourseSerializer(serializers.ModelSerializer):
         list_images = [CoursePoster(course=course, image=image) for image in files_data.getlist('posters')]
         CoursePoster.objects.bulk_create(list_images)
 
-        send_spam.delay(course_title=course.title)
+        send_notifications_about_new_course.delay(course.title)
         return course
 
     def to_representation(self, instance):
