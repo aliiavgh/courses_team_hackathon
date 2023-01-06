@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import RegisterSerializer, RegisterTeacherSerializer
+from .serializers import RegisterSerializer
 
 User = get_user_model()
 
@@ -26,21 +26,3 @@ class ActivationApiView(APIView):
         user.activation_code = ''
         user.save()
         return Response('Вы успешно зарегистрировались.Вам отправили код для активации', status=status.HTTP_200_OK)
-
-
-class RegisterTeacherApiView(APIView):
-    def post(self, request):
-        serializer = RegisterTeacherSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-
-        return Response('Вы успешно зарегистрировались.Вам отправили код для активации', status=status.HTTP_201_CREATED)
-
-# class ActivationTeacherApiView(APIView):
-#     def get(self, request, activation_code):
-#         user = get_object_or_404(User, activation_code=activation_code)
-#         user.is_active = True
-#         user.is_staff = True
-#         user.activation_code = ''
-#         user.save()
-#         return Response('Вы успешно зарегистрировались.Вам отправили код для активации', status=status.HTTP_200_OK)

@@ -14,8 +14,8 @@ for i in user:
 @app.task
 def send_spam():
     send_mail(
-        'Спам',
-        'Привет',
+        'Здравствуйте, Вас приветствует courses.kg',
+        'Мы рады что вы с нами!',
         'musabekova.amina13@gmail.com',
         email
     )
