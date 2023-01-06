@@ -8,7 +8,10 @@
   <component name="PyCharmProfessionalAdvertiser">
     <option name="shown" value="true" />
   </component>
+<<<<<<< HEAD
 =======
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.8 (team_hackathon )" project-jdk-type="Python SDK" />
 >>>>>>> origin/account_user
+=======
+>>>>>>> 3d1b40dc7a1aa03ae447febb68266f11154ee760
 </project>
