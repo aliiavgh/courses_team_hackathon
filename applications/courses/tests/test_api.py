@@ -36,7 +36,7 @@ class ReadCourseAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         serializer_data = CourseSerializer(courses, many=True).data
-        #self.assertEqual(response.data.get('results'), serializer_data)
+        self.assertEqual(response.data.get('results'), serializer_data)
 
     def test_get_single_course_detail(self):
         course = Course.objects.all()[0]
@@ -44,7 +44,7 @@ class ReadCourseAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         serializer_data = CourseSerializer(course).data
-        #self.assertEqual(response.data, serializer_data)
+        self.assertEqual(response.data, serializer_data)
 
 
 class CreateCourseAPITestCase(APITestCase):

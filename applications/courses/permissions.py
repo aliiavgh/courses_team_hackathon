@@ -8,4 +8,4 @@ class IsCourseOwner(BasePermission):
             return True
         elif request.method in ['PUT', 'PATCH']:
             return request.user.is_authenticated and request.user == obj.teacher
-        return request.user.is_authenticated and (request.user == obj.teacher or request.user.is_staff)
+        return request.user.is_authenticated and request.user == obj.teacher and request.user.is_teacher

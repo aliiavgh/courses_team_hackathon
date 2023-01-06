@@ -1,14 +1,7 @@
-import json
-import re
-import token
 from datetime import date
 
 from django.contrib.auth import get_user_model
-from django.core import mail
 from django.test import TestCase
-from django.urls import reverse
-
-from model_bakery import baker
 
 from applications.courses.models import Subject, Course
 from applications.purchases.models import Purchase

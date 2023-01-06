@@ -6,4 +6,3 @@ admin.site.register(Like)
 admin.site.register(Comment)
 admin.site.register(Bookmark)
 admin.site.register(Rating)
-
